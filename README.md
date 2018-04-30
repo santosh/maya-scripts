@@ -1,1 +1,1 @@
-Residue of 2 books. Second book is Practical Maya Programming.
+All complete maya scrpits are pushed here.
