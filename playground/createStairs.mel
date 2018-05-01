@@ -1,0 +1,48 @@
+window -rtf true -title "Stairs Creator";
+    columnLayout;
+        intSliderGrp -label "Number of Step: " - field true numSteps;
+        floatSliderGrp -label "Height of Step: " - field true stepH;
+        floatSliderGrp -label "Width of Step: " - field true stepW;
+        floatSliderGrp -label "Depth of Step: " - field true stepD;
+        floatSliderGrp -label "Height of Railing: " - field true railH;
+        button -label "Make Stairs" -command "createStairs";
+showWindow;
+
+
+ 
+global proc createStairs() {
+    // dimmension of each steps
+    float $stepH = `floatSliderGrp -q -value "stepH"`;
+    float $stepW = `floatSliderGrp -q -value "stepW"`;
+    float $stepD = `floatSliderGrp -q -value "stepD"`;
+
+    // number of steps
+    int $numSteps = `intSliderGrp -q -value "numSteps"`;
+
+    // height of rail; not created if 0
+    float $railH = `floatSliderGrp -q -value "railH"`;
+
+    // calculated measurements
+    float $toH = $stepH * $numSteps;
+    float $toD = $stepD * $numSteps;
+    float $railAngle = atand($toD/$toH);
+    float $railLen = sqrt($toH*$toH + $toD*$toD);
+
+    // iterate of numSteps to create steps and railing and rail support
+    for ($i=0; $i < $numSteps; ++$i) {
+        polyCube -h $stepH -w $stepW -d $stepD;
+        // move each steps deep and up
+        move -r 0 ($stepH*$i) ($stepD*$i);
+        // only create rail support if height is given
+        if ($railH > 0) {
+            polyCylinder -r 0.5 -h $railH;
+            move -r ($stepW/2) ($stepH*$i + 0.5*$railH) ($stepD*$i);
+        }
+    }
+
+    if ($railH > 0) {
+        polyCylinder -r 0.5 -h $railLen;
+        rotate -r $railAngle;
+        move -r ($stepW/2) ($toH/2 + $railH - 0.5*$stepH) ($toD/2 - 0.5*$stepD);
+    }
+}
