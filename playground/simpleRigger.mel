@@ -1,0 +1,39 @@
+// previously cubeRig.mel
+// works with any number of selection
+
+global proc rigNodes(int $lock) {
+    string $selection[] = `ls -sl`;
+
+    for ($obj in $selection) {
+        string $circle[] = `circle`;
+        
+        // snap the circle to the cube with a constraint
+        // I don't know how this works, or if it is needed
+        string $con[] = `parentConstraint $obj $circle[0]`;
+        delete $con;
+
+        // parent the cube under circle
+        parent $obj $circle[0];
+
+        // if locknode is true; lock the attributes on trans, rot and scale
+        if ($lock == 1) {
+            setAttr -lock true ($obj+".translate");
+            setAttr -lock true ($obj+".rotate");
+            setAttr -lock true ($obj+".scale");
+        }
+        
+        select $circle[0];
+    }
+}
+
+if (`window -exists simpleRiggerWindow`) {
+    deleteUI simpleRiggerWindow;
+}
+
+window -title "Simple Rigger" -widthHeight 320 200 simpleRiggerWindow;
+    gridLayout -numberOfColumns 2 -cellWidthHeight 150 80;
+      button -label "Create Sphere" -command "polySphere";
+      button -label "Create Cube" -command "polyCube";
+      button -label "Rig Nodes (locked)" -command "rigNodes(1)";
+      button -label "Rig Nodes (unlocked)" -command "rigNodes(0)";
+showWindow simpleRiggerWindow;
