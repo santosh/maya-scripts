@@ -1,3 +1,5 @@
+import pymel.core as pm
+
 class MayaGeom(object):
     """docstring for MayaGeom."""
     def __init__(self, name="Geometry"):
@@ -11,9 +13,9 @@ class MayaGeom(object):
         return pm.xform(self.name, query=True, translation=True)
 
     def setTranslation(self, x=None, y=None, z=None):
-        if x is None:
+        if x is not None:
             pm.move(x, self.name, x=True, objectSpace=True, absolute=True)
-        if y is None:
+        if y is not None:
             pm.move(y, self.name, y=True, objectSpace=True, absolute=True)
-        if z is None:
+        if z is not None:
             pm.move(z, self.name, z=True, objectSpace=True, absolute=True)
