@@ -1,6 +1,7 @@
 import pymel.core as pm
 from mayaGeom import MayaGeom
 
+
 class MayaSphere(MayaGeom):
     """Sphere class inherited from MayaGeom."""
     def __init__(self, name='Sphere', **kwargs):
@@ -49,3 +50,13 @@ class MayaSphere(MayaGeom):
             if val is not None:
                 opts = {name: True, 'objectSpace': True, 'absolute': True}
                 func(val, self.name, **opts)
+
+
+class PolySphere(MayaSphere):
+
+    def __init__(self, name="PolySphere", **kwargs):
+        MayaSphere.__init__(self, name, **kwargs)
+
+    def _create(self, opts={}):
+        parts = pm.polySphere(**opts)
+        self.name = parts[0]
