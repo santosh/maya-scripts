@@ -19,3 +19,22 @@ class MayaSphere(MayaGeom):
                 opts = {name: True, 'objectSpace': True, 'absolute': True}
                 pm.move(val, self.name, **opts)
 
+    def getRotation(self):
+        return pm.xform(self.name, q=1, ro=1)  # ro=rotation
+
+    def setRotation(self, x=None, y=None, z=None):
+        for name in ('x', 'y', 'z'):
+            val = locals()[name]
+            if val is not None:
+                opts = {name: True, 'objectSpace': True, 'absolute': True}
+                pm.rotate(val, self.name, **opts)
+
+    def getScale(self):
+        return pm.xform(self.name, q=1, scale=1)
+
+    def setScale(self, x=None, y=None, z=None):
+        for name in ('x', 'y', 'z'):
+            val = locals()[name]
+            if val is not None:
+                opts = {name: True, 'objectSpace': True, 'absolute': True}
+                pm.scale(val, self.name, **opts)
