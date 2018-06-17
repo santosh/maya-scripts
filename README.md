@@ -6,3 +6,17 @@ All complete maya scripts are pushed here.
 `removeInvalidClipboardData` - Handles buggy Maya paste from PyCharm
 
 `StairCreator` - A tool to create stairs with railing.
+
+<!-- # Install  -->
+
+<!-- # Configure -->
+
+<!-- # Highlights -->
+
+<!-- # Contribute -->
+
+<!-- # FAQ -->
+
+<!-- # Related -->
+
+<!-- # License -->
